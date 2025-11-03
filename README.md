@@ -1,1 +1,35 @@
 # test-argocd
+
+mkdir minikube-standard-nginx-deploy
+cd minikube-standard-nginx-deploy
+minikube start --driver=docker\n
+kubectl get nodes
+kubectl create namespace argocd\n
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml\n
+kubectl get pods -n argocd\n
+kubectl get pods -n argocd\n
+kubectl patch svc argocd-server -n argocd \\n  -p '{"spec": {"type": "NodePort"}}'\n
+kubectl get svc -n argocd argocd-server\n
+minikube service -n argocd argocd-server\n
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode; echo\n
+minikube service -n argocd argocd-server\n
+
+git clone https://github.com/jagath-devops-org/test-argocd.git
+cd test-argocd
+git checkout -b test
+mkdir my-nginx-app/
+touch deployment.yaml
+vi deployment.yaml
+vi service.yaml
+git add my-nginx-app
+git push
+kubectl apply -f nginx-app.yaml   - creates the Argocd app - which connects to github and sync app
+
+kubectl get applications -n argocd\n
+vi nginx-app.yaml
+git add my-nginx-app
+git commt -am "adding the app yaml"
+git commit -am "adding the app yaml"
+git add nginx-app.yaml
+git commit -am "adding the app yaml"
+git push
